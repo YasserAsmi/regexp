@@ -1,2 +1,7 @@
-all:
-	g++ -Wall -O2 -o test regexp.cpp test.cpp -lpcre
+TYPE = lib
+SOURCES = regexp.cpp
+INCLUDES = -I. -I/usr/local/include
+OUT = ../libRegExp.a
+
+#-----------------------------------------------------------------
+include ../makefile.inc
