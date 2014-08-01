@@ -4,4 +4,4 @@ INCLUDES = -I. -I/usr/local/include
 OUT = ../libRegExp.a
 
 #-----------------------------------------------------------------
-include ../makefile.inc
+include ../build.mk

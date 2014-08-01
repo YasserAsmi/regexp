@@ -1,4 +1,4 @@
 DIRS = src test
 
 #-----------------------------------------------------------------
-include makefile.inc
+include build.mk

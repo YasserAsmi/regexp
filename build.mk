@@ -15,9 +15,9 @@ else
 CXXFLAGS += -O2 -Wall
 endif
 
-all: dirs cfgcheck $(OUT)
+all: dirs extmakes cfgcheck mkdirs $(OUT)
 
-.PHONY: clean cleanall all $(DIRS)
+.PHONY: clean cleanall all $(DIRS) $(MKDIRS) $(EXTMAKES)
 
 cfgcheck:
 ifneq ($(CFG),release)
@@ -40,18 +40,29 @@ endif
 
 %.o: %.cpp
 	$(CXX) -c $(INCLUDES) $(CXXFLAGS) $*.cpp -o $*.o
-	$(CXX) -MM $(CXXFLAGS) $*.cpp > $*.d
+	$(CXX) -MM $(INCLUDES) $(CXXFLAGS) $*.cpp > $*.d
 	@cp -f $*.d $*.d.tmp
 	@sed -e 's/.*://' -e 's/\\$$//' < $*.d.tmp | fmt -1 | sed -e 's/^ *//' -e 's/$$/:/' >> $*.d
 	@rm -f $*.d.tmp
 
 dirs: $(DIRS)
 
+extmakes: $(EXTMAKES)
+
+mkdirs: $(MKDIRS)
+
 clean:
 	rm -f $(OUT) *.o *.d
 
-cleanall: TARG:=clean
-cleanall: $(DIRS)
+cleanall: TARG:=cleanall
+cleanall: $(DIRS) $(EXTMAKES)
+	rm -f $(OUT) *.o *.d
 
 $(DIRS):
 	@$(MAKE) -C $@ $(TARG)
+
+$(EXTMAKES):
+	@$(MAKE) -f $@ $(TARG)
+
+$(MKDIRS):
+	@mkdir -p $@

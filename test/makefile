@@ -5,5 +5,5 @@ LIBS = ../libRegExp.a -lpcre
 OUT = test
 
 #-----------------------------------------------------------------
-include ../makefile.inc
+include ../build.mk
 
