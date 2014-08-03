@@ -5,14 +5,10 @@ ifeq ($(CFG),)
 CFG=debug
 endif
 
-# for debugger: -O0 -g -Wall
-# for development and internal release: -O2 -g -Wall
-# for release outside the company: -O2 -Wall
-
 ifeq ($(CFG),debug)
-CXXFLAGS += -g -Wall -DNDEBUG
+CXXFLAGS += -g -Wall
 else
-CXXFLAGS += -O2 -Wall
+CXXFLAGS += -O3 -Wall -DNDEBUG
 endif
 
 all: dirs extmakes cfgcheck mkdirs $(OUT)
