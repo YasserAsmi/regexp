@@ -283,13 +283,16 @@ void RegExp::capReplace(int cindex, const char* with)
 
         mSubject->replace(pos, len, with);
 
-        mOutVec[1] += delta;
-
-        // Update following substring positions by adding delta
-
-        for (int n = 2 * cindex + 1; n < 2 * mCapCount; n++)
+        // Update any substring positions that are at or after the
+        // end of the modified substring
+        int lastSubStrCharPos = pos + len - 1;
+        for (int n = 0; n < 2 * mCapCount; n++)
         {
-            mOutVec[n] += delta;
+            if (mOutVec[n] >= lastSubStrCharPos)
+            {
+                mOutVec[n] += delta;
+            }
+
         }
     }
 }
