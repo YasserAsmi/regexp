@@ -40,16 +40,22 @@ public:
     {
         mInternalSubject.assign(subjectstr);
         mSubject = &mInternalSubject;
+        mOutVec[0] = 0;
+        mOutVec[1] = 0;
     }
     inline void copySubject(const char* subjectstr)
     {
         mInternalSubject.assign(subjectstr);
         mSubject = &mInternalSubject;
+        mOutVec[0] = 0;
+        mOutVec[1] = 0;
     }
     inline void refSubject(std::string& subjectstr)
     {
         mInternalSubject.clear();
         mSubject = &subjectstr;
+        mOutVec[0] = 0;
+        mOutVec[1] = 0;
     }
     inline const std::string& getSubject()
     {

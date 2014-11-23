@@ -36,31 +36,38 @@ void test_multiple()
 {
     RegExp reg;
 
-    // You can either pass the reg exp to the constructor or call compile() method
+    // We can either pass the reg exp to the constructor or call compile() method
     reg.compile(regex_email);
 
-    // setup our subject string
-    reg.copySubject(str);
-
-    // Find matches by executing the regular expression
-    int n = 0;
-    while (reg.exec())
+    // We can compile once and match for multiple subject strings.  We repeat the
+    // test 3 times.  reg
+    for (int t = 0; t < 3; t++)
     {
-        printf("Match %d at pos %d\n", ++n, reg.matchPos());
+        // setup our subject string
+        reg.copySubject(str);
 
-        // Print captures
-        for (int i = 0; i < reg.capCount(); i++)
+        // Find multiple matches by executing the regular expression.  We need to call
+        // exec until it returns false (no more matches).
+
+        int n = 0;
+        while (reg.exec())
         {
-            printf("Cap %d: '%s'\n", i, reg.cap(i).c_str());
+            printf("Match %d at pos %d for test #%d\n", ++n, reg.matchPos(), t);
+
+            // Print captures
+            for (int i = 0; i < reg.capCount(); i++)
+            {
+                printf("Cap %d: '%s'\n", i, reg.cap(i).c_str());
+            }
+
+            // Print named captures and their values
+            for (int i = 0; i < reg.nameCount(); i++)
+            {
+                printf("Named %d: %s = '%s'\n", i, reg.name(i).c_str(), reg.cap(reg.name(i)).c_str() );
+            }
         }
 
-        // Print named captures and their values
-        for (int i = 0; i < reg.nameCount(); i++)
-        {
-            printf("Named %d: %s = '%s'\n", i, reg.name(i).c_str(), reg.cap(reg.name(i)).c_str() );
-        }
     }
-
 }
 
 
